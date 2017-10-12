@@ -6,7 +6,7 @@ import threading
 
 class UDPServer(socketserver.ThreadingUDPServer):
 
-    def __init__(self, address, handler, max_clients=20):
+    def __init__(self, address, handler, max_clients=1000):
         super().__init__(address, handler)
         self.current_clients = 0
         self.max_clients = max_clients
