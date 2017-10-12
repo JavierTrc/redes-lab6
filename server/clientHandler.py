@@ -14,8 +14,7 @@ class UDPClientHandler(socketserver.BaseRequestHandler):
         client = self.client_address[0]
         data = str(self.request[0].strip(), "utf-8")
         seq = data.split(";")
-        time_diff = time.time() * 1000 - float(seq[1])
-        registry = "{0}:{1} ms".format(seq[0], time_diff)
-        print("\n" + registry + "\n")
-        with open("registry/" + client, "w+") as f:
+        with open("registry/" + client, "a+") as f:
+            time_diff = time.time() * 1000 - float(seq[1])
+            registry = "{0}:{1} ms\n".format(seq[0], time_diff)
             f.write(registry)
