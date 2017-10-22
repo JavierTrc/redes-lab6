@@ -6,9 +6,9 @@ import time
 def handler(sock, address, num_mens):
     timestamp_now = time.time()
     for i in range(0, num_mens):
-        timestamp_ms = time.time() * 1000
+        timestamp_s = time.time()
         msj = "{0};{1};{2};{3}".format(timestamp_now,
-                                       num_mens, i, timestamp_ms)
+                                       num_mens, i, timestamp_s)
 
         sock.sendto(bytes(msj, "utf-8"), address)
 

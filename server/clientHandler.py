@@ -17,7 +17,7 @@ class UDPClientHandler(socketserver.BaseRequestHandler):
         time_group, tot_mens, seq_num, time_sent = data
 
         # Time diference between the time it arrives and it leaves
-        time_diff = time.time() * 1000 - float(time_sent)
+        time_diff = (time.time() - float(time_sent))*1000
 
         # Creating thr folder if it doesn't exists
         filepath = "./registry/{}".format(client)
