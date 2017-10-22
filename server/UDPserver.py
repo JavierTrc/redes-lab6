@@ -16,7 +16,6 @@ class UDPServer(socketserver.ThreadingUDPServer):
         print(self.current_clients)
 
     def verify_request(self, request, client_address):
-        print("verifying request")
         if self.current_clients == self.max_clients:
             return False
         else:
@@ -25,7 +24,7 @@ class UDPServer(socketserver.ThreadingUDPServer):
 
 def main(PORT):
 
-    HOST = "localhost"
+    HOST = "0.0.0.0"
 
     server = UDPServer((HOST, PORT), clientHandler.UDPClientHandler)
 
