@@ -3,8 +3,8 @@ import os
 import time
 import math
 import sys
-BUFFER_SIZE = 1024
 from socket import timeout
+import hashlib
 
 
 def getFiles(dir):
@@ -43,15 +43,22 @@ class UDPClientHandler(socketserver.BaseRequestHandler):
                     f.write("{}\n".format(tot_mens))
                     f.write(registry)
 
-        elif "files" in data and len(data) == 3:
+        elif "files" in data and len(data) == 4:
             # Creating thr folder if it doesn't exists
-            file,filename,type = data
+            file,filename,hash,type = data
             filepath = "./repo/{}".format(client)
             if not os.path.isdir(filepath):
                 os.mkdir("./repo/{}".format(client))
-            f = open("repo/" + client + "/" + filename, 'wb')
-            print ("Received part of File:", filename)
-            f.write(datos)
+            with open("repo/" + client + "/" + filename, 'wb') as f:
+                file = file.encode("utf-8")
+                hash_object = hashlib.sha1(file).hexdigest()
+                f.write(file)
+                #datos = self.request[0]
+                #data = str(datos.strip(), "utf-8").split(";")
+                #file, filename, hash, type = data
+                #file = file.encode("utf-8")
+                #hash_object = hashlib.sha1(file).hexdigest()
+            print("Received part of File:", filename)
 
     def file_len(self,fname):
         non_blank_count = 0

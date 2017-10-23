@@ -39,9 +39,12 @@ class App:
         Label(frameFiles, text="Server Port: ").grid(row=1, stick=W)
         self.ip_input2 = Entry(frameFiles)
         self.ip_input2.grid(row=0, column=1)
-
         self.port_input2 = Entry(frameFiles)
         self.port_input2.grid(row=1, column=1)
+        Label(frameFiles, text="Buffer Size: ").grid(row=2, stick=W)
+        self.buffer_input = Entry(frameFiles)
+        self.buffer_input.grid(row=2, column=1)
+
         Button(frameFiles, text="BACK", fg='red',command=lambda: self.raise_frame(frame)).grid(row=5, column=2)
 
         Button(frameFiles, text="SEND", command=lambda: self.SendFiles(frameFiles)).grid(row=5, column=1)
@@ -85,12 +88,13 @@ class App:
         if(self.paso == 2):
             ip = self.ip_input2.get()
             port = int(self.port_input2.get())
+            buffer = int(self.buffer_input.get())
             size = self.size
             filename = self.sendtext.get()
             self.gettext.configure(state='disabled')
             self.sendtext.delete(0, END)
             self.gettext.configure(state='disabled')
-            clientProtocolHandlerFiles.client(ip, port,size,filename, frameFiles)
+            clientProtocolHandlerFiles.client(ip, port,size,filename, buffer)
         self.paso = self.paso + 1
 
     def raise_frame(self, frame):
