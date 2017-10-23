@@ -2,7 +2,6 @@ import socketserver
 import os
 import time
 import math
-import chardet
 import sys
 BUFFER_SIZE = 1024
 from socket import timeout
@@ -52,9 +51,7 @@ class UDPClientHandler(socketserver.BaseRequestHandler):
                 os.mkdir("./repo/{}".format(client))
             f = open("repo/" + client + "/" + filename, 'wb')
             print ("Received part of File:", filename)
-            while (datos):
-                f.write(datos)
-                datos, addr = self.request
+            f.write(datos)
 
     def file_len(self,fname):
         non_blank_count = 0

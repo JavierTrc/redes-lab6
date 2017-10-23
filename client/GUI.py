@@ -32,7 +32,7 @@ class App:
         self.num_input = Entry(frame)
         self.num_input.grid(row=2, column=1)
 
-        Button(frame, text='Go to frame 2', command=lambda: self.raise_frame(frameFiles)).grid(row=5)
+        Button(frame, text='Send Files', command=lambda: self.raise_frame(frameFiles)).grid(row=5)
         confirm = Button(frame, text="Send Messages", command=self.send).grid(row=4)
         self.raise_frame(frame)
         Label(frameFiles, text="Server IP: ").grid(row=0, stick=W)
