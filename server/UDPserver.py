@@ -25,7 +25,7 @@ class UDPServer(socketserver.ThreadingUDPServer):
 
 def main(PORT):
 
-    HOST = "localhost"
+    HOST = "0.0.0.0"
 
     server = UDPServer((HOST, PORT), clientHandler.UDPClientHandler)
 

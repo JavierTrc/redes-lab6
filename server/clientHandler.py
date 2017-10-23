@@ -24,7 +24,7 @@ class UDPClientHandler(socketserver.BaseRequestHandler):
             time_group, tot_mens, seq_num, time_sent,type = data
 
             # Time diference between the time it arrives and it leaves
-            time_diff = time.time() * 1000 - float(time_sent)
+            time_diff = (time.time() - float(time_sent)) * 1000
 
             # Creating thr folder if it doesn't exists
             filepath = "./registry/{}".format(client)
@@ -40,8 +40,9 @@ class UDPClientHandler(socketserver.BaseRequestHandler):
             else:
                 with open("registry/" + client + "/" + filename, "w+") as f:
                     registry = "{0}:{1} ms\n".format(seq_num, time_diff)
-                    f.write("{}\n".format("Numero de mensajes: " + tot_mens))
+                    f.write("{}\n".format(tot_mens))
                     f.write(registry)
+
         elif "files" in data and len(data) == 3:
             # Creating thr folder if it doesn't exists
             file,filename,type = data
