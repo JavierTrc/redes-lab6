@@ -2,6 +2,8 @@ import sys
 import socketserver
 import clientHandler
 import threading
+import os
+import socket
 
 
 class UDPServer(socketserver.ThreadingUDPServer):
@@ -13,7 +15,6 @@ class UDPServer(socketserver.ThreadingUDPServer):
 
     def service_actions(self):
         self.current_clients = threading.active_count() - 1
-        print(self.current_clients)
 
     def verify_request(self, request, client_address):
         if self.current_clients == self.max_clients:

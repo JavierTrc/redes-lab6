@@ -7,11 +7,9 @@ def handler(sock, address, num_mens):
     timestamp_now = time.time()
     for i in range(0, num_mens):
         timestamp_ms = time.time() * 1000
-        msj = "{0};{1};{2};{3}".format(timestamp_now,
-                                       num_mens, i, timestamp_ms)
+        msj = "{0};{1};{2};{3};{4}".format(timestamp_now,num_mens, i, timestamp_ms,"obj")
 
         sock.sendto(bytes(msj, "utf-8"), address)
-
 
 def client(ip, port, num_obj=5):
     with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
