@@ -37,6 +37,7 @@ class UDPClientHandler(socketserver.BaseRequestHandler):
                 with open("registry/" + client + "/" + filename, "a") as f:
                     registry = "{0}:{1} ms\n".format(seq_num, time_diff)
                     f.write(registry)
+                    print("Han llegado " + str(self.file_len(f.name)) +" de " +str(tot_mens)+ " mensajes.")
             else:
                 with open("registry/" + client + "/" + filename, "w+") as f:
                     registry = "{0}:{1} ms\n".format(seq_num, time_diff)
@@ -54,3 +55,11 @@ class UDPClientHandler(socketserver.BaseRequestHandler):
             while (datos):
                 f.write(datos)
                 datos, addr = self.request
+
+    def file_len(self,fname):
+        non_blank_count = 0
+        with open(fname) as infp:
+            for line in infp:
+                if line.strip():
+                    non_blank_count += 1
+        return non_blank_count
