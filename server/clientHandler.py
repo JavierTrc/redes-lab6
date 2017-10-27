@@ -3,7 +3,7 @@ import os
 import time
 import math
 import sys
-from socket import timeout
+from socket import *
 import hashlib
 
 
@@ -13,7 +13,6 @@ def getFiles(dir):
 
 class UDPClientHandler(socketserver.BaseRequestHandler):
     """Docs of UDPClient Handler"""
-
     def handle(self):
         client = self.client_address[0].replace(".", "-")
         datos = self.request[0]
@@ -43,22 +42,21 @@ class UDPClientHandler(socketserver.BaseRequestHandler):
                     f.write("{}\n".format(tot_mens))
                     f.write(registry)
 
-        elif "files" in data and len(data) == 4:
-            # Creating thr folder if it doesn't exists
-            file,filename,hash,type = data
+        elif "files" in data and len(data) == 5:
+            file,filename,hash,type,currentTime = data
             filepath = "./repo/{}".format(client)
             if not os.path.isdir(filepath):
                 os.mkdir("./repo/{}".format(client))
+            dta = bytes(file,"utf-8")
+            hash_object = hashlib.sha1(dta).hexdigest()
             with open("repo/" + client + "/" + filename, 'wb') as f:
-                file = file.encode("utf-8")
-                hash_object = hashlib.sha1(file).hexdigest()
-                f.write(file)
-                #datos = self.request[0]
-                #data = str(datos.strip(), "utf-8").split(";")
-                #file, filename, hash, type = data
-                #file = file.encode("utf-8")
-                #hash_object = hashlib.sha1(file).hexdigest()
-            print("Received part of File:", filename)
+                #if hash == hash_object:
+                    f.write(dta)
+                    datos = self.request[0]
+                    data = str(datos.strip(), "utf-8").split(";")
+                    file, filename, hash, type, currentTime = data
+                    dta = bytes(file,"utf-8")
+                    hash_object = hashlib.sha1(dta).hexdigest()
 
     def file_len(self,fname):
         non_blank_count = 0
