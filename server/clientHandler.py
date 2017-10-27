@@ -49,15 +49,22 @@ class UDPClientHandler(socketserver.BaseRequestHandler):
                 os.mkdir("./repo/{}".format(client))
             dta = bytes(file,"utf-8")
             hash_object = hashlib.sha1(dta).hexdigest()
+            time_diff = time.time() - float(currentTime)
             with open("repo/" + client + "/" + filename, 'wb') as f:
+                if(time_diff != 0.0):
                 #if hash == hash_object:
                     f.write(dta)
+                    print("Se ha transferido parte del archivo en " + str(time_diff) + " milisegundos.")
+                    time_diff = time.time() - float(currentTime)
+                else:
                     datos = self.request[0]
                     data = str(datos.strip(), "utf-8").split(";")
                     file, filename, hash, type, currentTime = data
-                    dta = bytes(file,"utf-8")
+                    dta = bytes(file, "utf-8")
                     hash_object = hashlib.sha1(dta).hexdigest()
-
+                    time_diff = time.time() - float(currentTime)
+                    f.write(dta)
+                    print("Se ha transferido parte del archivo en " + str(time_diff) + " segundos.")
     def file_len(self,fname):
         non_blank_count = 0
         with open(fname) as infp:
